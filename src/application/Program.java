@@ -5,14 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
+import model.entities.Product;
 import model.services.CalculationService;
 
 public class Program {
 
 	public static void main(String[] args) {
-		
-		List<Integer> list = new ArrayList<>();
+		Locale.setDefault(Locale.US);
+		List<Product> list = new ArrayList<>();
 		
 		String path = "C:\\Users\\leiss\\Documents\\Temp\\01.WS-ECLIPSE\\Generics-product-expensive\\product-list.csv";
 
@@ -20,10 +22,18 @@ public class Program {
 			
 			String line = br.readLine();
 			while (line != null) {
-				list.add(Integer.parseInt(line));
+				
+				String[] fields = line.split(",");
+				
+				String productName = fields[0];
+				Double productPrice = Double.parseDouble(fields[1]);
+				list.add(new Product(productName, productPrice));
 				line = br.readLine();
 			}
-			Integer x = CalculationService.max(list);
+			
+			Product x = CalculationService.max(list);
+			
+			
 			System.out.println("Max: ");
 			System.out.println(x);
 		}
